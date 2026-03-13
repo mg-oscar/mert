@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "mert-pre",
+            "type": "shell",
+            "command": "echo 'Running script before launch...' && ./build/debug.sh", // Replace with your actual script/command
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
