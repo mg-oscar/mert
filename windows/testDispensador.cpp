@@ -264,13 +264,26 @@ void AccionesDispensador(void)
 			case 0:
 				if(op<3)
 				{
+					#if 0
 					re = venta.reader_cim6903.ReadStatusStacker();
+					#endif
+					re = venta.reader_chm2901.ReadStatusStacker();
 					upStatusStacker(re);
 					op++;
 				}
 				else
 				{	op = 0;
+					#if 0
 					if( venta.reader_cim6903.CardPresent(MUID)!= 0)
+					{
+						gtk_button_set_label ( GTK_BUTTON(lblTDisp), (char *)"" );
+					}
+					else
+					{	sprintf(muid,"%02X%02X%02X%02X", MUID[0],MUID[1],MUID[2],MUID[3]);
+							gtk_button_set_label ( GTK_BUTTON(lblTDisp), muid );						
+					}
+					#endif
+					if( venta.reader_chm2901.CardPresent(/*MUID*/)!= 0)
 					{
 						gtk_button_set_label ( GTK_BUTTON(lblTDisp), (char *)"" );
 					}
@@ -283,22 +296,28 @@ void AccionesDispensador(void)
 				break;
 
 			case 1:	//	
-				venta.GetCard(STACKER1);				
+				venta.GetCard(/*STACKER1*/0);				
 				stModIO->AccionDispensador = 0;
 				break;
 
 			case 2:	//
-				venta.GetCard(STACKER2);
+				venta.GetCard(/*STACKER2*/0);
 				stModIO->AccionDispensador = 0;
 				break;
 
 			case 3:
+			#if 0
 				venta.reader_cim6903.Captura();
+			#endif
+				venta.reader_chm2901.CapturaCard();
 				stModIO->AccionDispensador = 0;
 				break;
 
 			case 4:
+			#if 0
 				venta.reader_cim6903.EjectDrop();
+			#endif
+				venta.reader_chm2901.EjectCard();
 				stModIO->AccionDispensador = 0;
 				break;
 
@@ -335,12 +354,12 @@ void AccionesDispensador(void)
 				break;
 
 			case 1:	//	
-				venta.GetCard(STACKER1);				
+				venta.GetCard(/*STACKER1*/0);				
 				stModIO->AccionDispensador = 0;
 				break;
 
 			case 2:	//
-				venta.GetCard(STACKER2);
+				venta.GetCard(/*STACKER2*/0);
 				stModIO->AccionDispensador = 0;
 				break;
 

@@ -55,6 +55,7 @@ public:
 					unsigned char mfuid[],
 					unsigned char LlavesMIA[16][6],
 					unsigned char DatosMIA[64][16]);
+	int READ_ALL_WITH_KEY(int tKey, BYTE pPASS[16][6], BYTE ReadBlocks[64][16] );
 	int ReadAllSector(	int TypeKey, 
 						unsigned char pPASS[16][6],
 						unsigned char ReadBlocks[64][16] );

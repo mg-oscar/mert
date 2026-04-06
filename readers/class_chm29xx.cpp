@@ -1003,6 +1003,38 @@ int CLASS_CHM29XX::Read_Sector1A(BYTE MFUID[], BYTE pPASS[16][6], BYTE readblock
 }
 
 /******************************************************************************/
+/*                                                                            */
+/******************************************************************************/
+int CLASS_CHM29XX::READ_ALL_WITH_KEY(int tKey, BYTE pPASS[16][6], BYTE ReadBlocks[64][16] )
+{	int k, re;
+
+	for(k=0; k<16;k++)
+	{
+		// Sector 1 -> Block: 4-4
+		if( RF_LoadKey(tKey, k*4, pPASS[k]) != 0)
+		{
+			printf("Error Load Key\n");
+			return 0x10001;
+		}
+
+		if( (re=RF_Autentifica()) != 0)
+		{
+			printf("Error Autentifica Sector 1A\n");
+			return 0x10002;
+		}
+//		printf("Autentifica [k=%d -> %d -> %d]\n",k,re, rbuf);
+
+		if( RF_ReadSector(k*4, ReadBlocks[k*4]) != 0)
+		{
+			printf("Error Read Sector=%d\n", k);
+			return 0x10003;
+		}
+	}
+	return 0x00;
+}
+
+
+/******************************************************************************/
 /* Graba un Block                                                             */
 /******************************************************************************/
 int CLASS_CHM29XX::WriteBlock(int tKey, int nblk, BYTE pPASS[16][6], BYTE wrblock[64][16] )

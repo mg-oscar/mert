@@ -6,7 +6,8 @@
  */
 
 #include "readers.h"
-#include "readers/class_cim6903.h"
+//#include "readers/class_cim6903.h"
+#include "readers/class_chm29xx.h"
 #include "libMIA.hpp"
 #include "readers/class_civintec.h"
 #include "readers/class_crt285.h"
@@ -36,8 +37,15 @@ int readers::GetCard(BYTE stk)
 
 		
 	{
-		case RDR_CIM6903:		// Kytronics
-				if( reader_cim6903.MoveMiaToReader(stk) == 0)
+		// case RDR_CIM6903:		// Kytronics
+		// 		if( reader_cim6903.MoveMiaToReader(stk) == 0)
+		// 		{
+		// 			return 0x00;
+		// 		}
+		// 		return 0x1000;	// error al mover la tarjeta
+		// 		break;
+		case RDR_CHM2901RF:		// Kytronics
+				if( reader_chm2901.GetCard() == 0)
 				{
 					return 0x00;
 				}
@@ -164,14 +172,21 @@ int readers::initComm( char marca, char tport, char namecomm[], int baud )
 				return 0x101;
 				break;
 
-		case RDR_CIM6903:		// Kytronics
-				printf("KYTRONICS CIM6903=[%s]\n",namecomm);
-				if( reader_cim6903.InitComm(tport, namecomm, baud) != 0)
+		//case RDR_CIM6903:		// Kytronics
+		//		printf("KYTRONICS CIM6903=[%s]\n",namecomm);
+		//		if( reader_cim6903.InitComm(tport, namecomm, baud) != 0)
+		//		{	printf("error crt \n");
+		//			return 0x101;
+		//		}
+		//		break;
+		case RDR_CHM2901RF: // Kytronics CHM2901
+				printf("KYTRONICS CHM2901=[%s]\n",namecomm);
+				if( reader_chm2901.InitComm(tport, namecomm, baud) != 0)
 				{	printf("error crt \n");
 					return 0x101;
 				}
-				break;
 
+		break;
 		case RDR_ACR1222L:
 				printf("OPEN ACR1222L\n");
 				break;
@@ -225,9 +240,16 @@ int readers::initPorts( char marca, char tport, char namecomm[], int baud )
 				return 0x101;
 				break;
 
-		case RDR_CIM6903:		// Kytronics
+		// case RDR_CIM6903:		// Kytronics
+		// 		printf("KYTRONICS=[%s]\n",namecomm);
+		// 		if( reader_cim6903.InitComm(tport, namecomm, baud) != 0)
+		// 		{	printf("error crt \n");
+		// 			return 0x101;
+		// 		}
+		// 		break;
+		case RDR_CHM2901RF:		// Kytronics
 				printf("KYTRONICS=[%s]\n",namecomm);
-				if( reader_cim6903.InitComm(tport, namecomm, baud) != 0)
+				if( reader_chm2901.InitComm(tport, namecomm, baud) != 0)
 				{	printf("error crt \n");
 					return 0x101;
 				}
@@ -311,9 +333,12 @@ int readers::Identifica(void)
 		case RDR_CN670:
 				break;
 
-		case RDR_CIM6903:		// Kytronics
-				return reader_cim6903.Identifica();
-				break;
+//		case RDR_CIM6903:		// Kytronics
+//				return reader_cim6903.Identifica();
+//				break;
+		case RDR_CHM2901RF:		// Kytronics
+				return reader_chm2901.Identifica();
+				break;		
 
 		case RDR_ACR1222L:
 				break;
@@ -395,17 +420,33 @@ int readers::StackerStatus(void)
 
 	switch(modelo)
 	{
-		case RDR_CIM6903:		// Kytronics
+		// case RDR_CIM6903:		// Kytronics
+		// 		// verifica el estado de stacker
+		// 	if( reader_cim6903.ReadStatusStacker()!=0)
+		// 	{	
+		// 		// error no vende
+		// 		return 0x01;
+		// 	}
+		// 	if	(	(	(reader_cim6903.Stacker[0]==STACKER_EMPTY) &&  
+		// 				(reader_cim6903.Stacker[1]==STACKER_EMPTY) )  ||
+		// 			(	(reader_cim6903.Stacker[0]==STACKER_ERROR) ||
+		// 				(reader_cim6903.Stacker[1]==STACKER_ERROR) )
+		// 		)
+		// 	{
+				
+		// 		return 0x01;	// No HAY TARJETAS DISPENSADOR
+		// 	}
+		// 	return 0x00;		// SI HAY TARJETAS EN EL DISPENSADOR
+		// 	break;
+		case RDR_CHM2901RF:		// Kytronics
 				// verifica el estado de stacker
-			if( reader_cim6903.ReadStatusStacker()!=0)
+			if( reader_chm2901.ReadStatusStacker()!=0)
 			{	
 				// error no vende
 				return 0x01;
 			}
-			if	(	(	(reader_cim6903.Stacker[0]==STACKER_EMPTY) &&  
-						(reader_cim6903.Stacker[1]==STACKER_EMPTY) )  ||
-					(	(reader_cim6903.Stacker[0]==STACKER_ERROR) ||
-						(reader_cim6903.Stacker[1]==STACKER_ERROR) )
+			if	(	(	(reader_chm2901.Stacker ==STACKER_EMPTY)  )  ||
+					(	(reader_chm2901.Stacker ==STACKER_UNKNOW) )//to do handling of Stacker status 
 				)
 			{
 				
@@ -438,9 +479,13 @@ int readers::GetStacker(unsigned char nstk)
 	switch(modelo)
 	{
 
-		case RDR_CIM6903:		// Kytronics
-			return reader_cim6903.Stacker[nstk];
+		// case RDR_CIM6903:		// Kytronics
+		// 	return reader_cim6903.Stacker[nstk];
+		// 	break;
+		case RDR_CHM2901RF:		// Kytronics
+			return reader_chm2901.Stacker;
 			break;
+
 
 		case DIS_KYT2664:		// Kytronics
 			return reader_kyt2664.Stacker[nstk];
@@ -457,10 +502,12 @@ int readers::EjectCard(void)
 	switch(modelo)
 	{
 
-		case RDR_CIM6903:		// Kytronics
-			return reader_cim6903.EjectDrop();
+		// case RDR_CIM6903:		// Kytronics
+		// 	return reader_cim6903.EjectDrop();
+		// 	break;
+		case RDR_CHM2901RF:		// Kytronics
+			return reader_chm2901.EjectCard();
 			break;
-		
 		case DIS_KYT2664:		// Kytronics
 			return reader_kyt2664.KytEject();
 			break;
@@ -476,10 +523,12 @@ int readers::CaptureCard(void)
 	switch(modelo)
 	{
 
-		case RDR_CIM6903:		// Kytronics
-			return reader_cim6903.Captura();
+		// case RDR_CIM6903:		// Kytronics
+		// 	return reader_cim6903.Captura();
+		// 	break;
+		case RDR_CHM2901RF:		// Kytronics
+			return reader_chm2901.CapturaCard(); //To do Check differences in Captura handling
 			break;
-		
 		case DIS_KYT2664:		// Kytronics
 			return reader_kyt2664.KytCaptura();
 			break;
@@ -503,8 +552,11 @@ int readers::CardPresent()
 				//return reader_cn670.CardPresent(MIA.MifareUID);
 				break;
 
-		case RDR_CIM6903:
-				return reader_cim6903.CardPresent(MIA.MifareUID);
+		// case RDR_CIM6903:
+		// 		return reader_cim6903.CardPresent(MIA.MifareUID);
+		// 		break;
+		case RDR_CHM2901RF:
+				return reader_chm2901.CardPresent(/*MIA.MifareUID*/);//To do handling of reading Mifare UID
 				break;
 				
 		case DIS_KYT2664:
@@ -676,8 +728,16 @@ int readers::READ_ALL_WITH_KEY(int tKey, BYTE pPASS[16][6], BYTE ReadBlocks[64][
 
 	switch(modelo)
 	{
-		case RDR_CIM6903:
-			if( reader_cim6903.READ_ALL_WITH_KEY( tKey, pPASS, ReadBlocks) != 0)
+		// case RDR_CIM6903:
+		// 	if( reader_cim6903.READ_ALL_WITH_KEY( tKey, pPASS, ReadBlocks) != 0)
+		// 	{
+		// 		printf("Error Read All\n");
+		// 		return 0x0101;
+		// 	}
+		// 		return 0x00;	//OK
+		// 	break;
+		case RDR_CHM2901RF:
+			if( reader_chm2901.READ_ALL_WITH_KEY( tKey, pPASS, ReadBlocks) != 0)
 			{
 				printf("Error Read All\n");
 				return 0x0101;
@@ -723,8 +783,18 @@ int readers::Read_Sector1A(BYTE MFUID[], BYTE pPASS[16][6], BYTE readblock[64][1
 
 	switch(modelo)
 	{
-		case RDR_CIM6903:
-			if( reader_cim6903.Read_Sector1A(	MIA.MifareUID, 
+		// case RDR_CIM6903:
+		// 	if( reader_cim6903.Read_Sector1A(	MIA.MifareUID, 
+		// 											MIA.KeyA, 
+		// 											MIA.ReadBlocks )!= 0)
+		// 	{
+		// 		printf("Error Sector 1A\n");
+		// 		return 0x0101;
+		// 	}
+		// 		return 0x00;	//OK
+		// 	break;
+		case RDR_CHM2901RF:
+			if( reader_chm2901.Read_Sector1A(	MIA.MifareUID, 
 													MIA.KeyA, 
 													MIA.ReadBlocks )!= 0)
 			{
@@ -956,7 +1026,7 @@ int readers::ReadAllData(int TypeKey)
 				}
 				return 0x00;
 				break;
-
+#if 0
 		case RDR_CIM6903:		// Kytronics
 //				tread = milisegundos();
 				if( (i=reader_cim6903.Read_Sector1A(MIA.MifareUID, MIA.KeyA, MIA.ReadBlocks ))!= 0)
@@ -999,7 +1069,7 @@ int readers::ReadAllData(int TypeKey)
 				return 0;
 
 				break;
-	
+#endif	
 		case RDR_ACR1222L:
 				break;
 
@@ -1053,11 +1123,14 @@ int readers::WriteBlock(int block)
 		case RDR_CN670:			// Civintec
 				break;
 
-		case RDR_CIM6903:		// Kytronics
-			return reader_cim6903.WriteBlock(KEYB, block, MIA.KeyB, MIA.WriteBlocks);
+		// case RDR_CIM6903:		// Kytronics
+		// 	return reader_cim6903.WriteBlock(KEYB, block, MIA.KeyB, MIA.WriteBlocks);
+		// 	return 0x00;
+		// 		break;
+		case RDR_CHM2901RF:		// Kytronics
+			return reader_chm2901.WriteBlock(KEYB, block, MIA.KeyB, MIA.WriteBlocks);
 			return 0x00;
 				break;
-
 		case DIS_KYT2664:
 			if (modelo_exp==RDR_ACR1222L)
 			{

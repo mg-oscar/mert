@@ -8,7 +8,7 @@
 #include "libMIA.hpp"
 #include "printer.h"
 #include "readers.h"
-#include "readers/class_cim6903.h"
+//#include "readers/class_cim6903.h"
 #include "windows/dispensador.h"
 #include "mert.h"
 #include "kytv26xx.h"
@@ -69,7 +69,7 @@ void RevisaPermisoVenta(void)
 			// // HAY TARJETAS EN LOS DISPENSADORES
 			// Revisar la BD
 			if	(	(detStackers[MAGAZINE1].TotalTarjetas==0) && 
-					(detStackers[MAGAZINE2].TotalTarjetas==0) 
+					(detStackers[MAGAZINE2].TotalTarjetas==0) //To do. handling of magazines in data base
 				)
 			{
 				printf("NO VENDE\n");
@@ -823,15 +823,16 @@ int SeleccionaStacker(void)
 	}
 
 	// MAGAZINE 1 -> ACTIVO
-	if(Config.Stacker == STACKER1)
-	{	// HAY TARJETAS EN BASE DE DATOS
+	//if(Config.Stacker == STACKER1)
+	//{	// HAY TARJETAS EN BASE DE DATOS
 		if(	detStackers[MAGAZINE1].TotalTarjetas>0)
 		{	// STATUS NO EMPTY
 			if( venta.GetStacker(0x00) != 0)
 				return MAGAZINE1;	// OK- STACKER1
 		}
-	}
+	//}
 
+	#if 0
 	// MAGAZINE 2 -> ACTIVO
 	if(Config.Stacker == STACKER2)
 	{	// HAY TARJETAS EN BASE DE DATOS
@@ -841,6 +842,7 @@ int SeleccionaStacker(void)
 				return MAGAZINE2;	// OK- STACKER2
 		}
 	}
+	#endif
 
 	// NO CUMPLEN LAS CONDICIONES LOS STACKERS
 	if(	detStackers[MAGAZINE1].TotalTarjetas>0)

@@ -16,6 +16,7 @@
 #define RDR_ARCONTIA	6
 #define DIS_KYT2664		7
 #define RDR_ACR1252L	8
+#define RDR_CHM2901RF 	9
 
 
 #define CARD_PRESENT	1
@@ -44,7 +45,8 @@ public:
 	// READERS
 	CLASS_CRT285	reader_crt285;		// Reader CRT_285	China Creator
 	CLASS_CIVINTEC	reader_cn670;		// Reader CN670		Civintec
-	CLASS_CIM6903	reader_cim6903;		// Reader CIM6903	KYT
+	//CLASS_CIM6903	reader_cim6903;		// Reader CIM6903	KYT
+	CLASS_CHM29XX	reader_chm2901;		// Reader CHM29XX	KYT
 	CLASS_ACR1222L	reader_acr1222;		// Reader CR1222L	ACS
 	CLASS_CRT603vx	reader_crt603;		// Reader CRT603	China Creator
 	CLASS_KYT26xx	reader_kyt2664;		// Reader KYT2664	KYT
