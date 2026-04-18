@@ -28,7 +28,6 @@
 #define MAGAZINE2					0x01
 
 
-
 class readers
 {
 public:

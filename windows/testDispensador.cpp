@@ -180,10 +180,10 @@ void winTestDispensador(void)
 	g_signal_connect ( btn, "clicked",  G_CALLBACK (ButtonEventDisp), (gpointer *)"1");	
 
 	// Botones de accion
-	btn = CreateButton (fxDisp, (char *)"  TOMA\n TARJETA\nSTACKER 2",50,240);
-	gtk_setfont(btn, "SANS", 700, 35);
-	gtk_setsize(btn, 260,50);
-	g_signal_connect ( btn, "clicked",  G_CALLBACK (ButtonEventDisp), (gpointer *)"2");	
+	//btn = CreateButton (fxDisp, (char *)"  TOMA\n TARJETA\nSTACKER 2",50,240);
+	//gtk_setfont(btn, "SANS", 700, 35);
+	//gtk_setsize(btn, 260,50);
+	//g_signal_connect ( btn, "clicked",  G_CALLBACK (ButtonEventDisp), (gpointer *)"2");	
 
 	// Botones de accion
 	btn = CreateButton (fxDisp, (char *)"CAPTURA\n\nTARJETA",380,80);
@@ -197,7 +197,7 @@ void winTestDispensador(void)
 	g_signal_connect ( btn, "clicked",  G_CALLBACK (ButtonEventDisp), (gpointer *)"4");	
 
 	// FRAME
-	for(i=0; i<2; i++)
+	for(i=0; i<1; i++)
 	{	sprintf(msg,"STATUS STACKER %d", i+1);
 		frm = gtk_frame_new(msg);
 		gtk_fixed_put (GTK_FIXED(fxDisp), frm, (50 + 330*i),  420);
@@ -291,7 +291,7 @@ void AccionesDispensador(void)
 					}
 					else
 					{	sprintf(muid,"%02X%02X%02X%02X", venta.MIA.MifareUID[0],venta.MIA.MifareUID[1],venta.MIA.MifareUID[2],venta.MIA.MifareUID[3]);
-						tk_button_set_label ( GTK_BUTTON(lblTDisp), muid );	
+						gtk_button_set_label ( GTK_BUTTON(lblTDisp), muid );	
 					}
 				}
 

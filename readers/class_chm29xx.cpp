@@ -409,16 +409,33 @@ int CLASS_CHM29XX::ObtieneErrores(void)
 /******************************************************************************/
 int CLASS_CHM29XX::CapturaCard(void)
 {
-	// captura la Tarjeta
-	if( SendCmd(CMD_CardCapture, auxBuf, 0, TO_CAPTURA ) != 0)
+	int k;
+
+	for(k=0; k<5; k++)
 	{
-		printf("Error en Captura\n");
-		return 0x01;
+		usleep(200000);
+		// captura la Tarjeta
+		if( SendCmd(CMD_CardCapture, auxBuf, 0, TO_CAPTURA ) != 0)
+		{
+			printf("Error en Captura\n");
+			continue;
 
+		}
+		else
+		{
+			ECode = (rxBuf[8]*0x100) + rxBuf[9];
+		}
+
+		usleep(200000);
+		if(ReadPosicionMIA()==0)
+		{
+			if(rxBuf[0x0B]== 0x00)
+			{	
+				// NO HAY TARJETA EN READER
+				return 0x00;	// OK
+			}
+		}
 	}
-	ECode = (rxBuf[8]*0x100) + rxBuf[9]; 
-	return 0x00;
-
 	return 0x01;	// error no se capturo la tarjeta
 }
 
@@ -1145,7 +1162,7 @@ int CLASS_CHM29XX::CardPresent(BYTE UID[])
 	}
 	else
 		printf("Card NO Present\n");
-		
+
 	ECode = (rxBuf[8]*0x100) + rxBuf[9]; 
 
 	return 0x01;

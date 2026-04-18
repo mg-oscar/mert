@@ -68,9 +68,7 @@ void RevisaPermisoVenta(void)
 				printf("HAY TARJETAS EN STACKERS\n");
 			// // HAY TARJETAS EN LOS DISPENSADORES
 			// Revisar la BD
-			if	(	(detStackers[MAGAZINE1].TotalTarjetas==0) && 
-					(detStackers[MAGAZINE2].TotalTarjetas==0) //To do. handling of magazines in data base
-				)
+			if	(detStackers[MAGAZINE1].TotalTarjetas==0)
 			{
 				printf("NO VENDE\n");
 				mert_operacion.fgVENTA = 0;	// No Vende Tarjetas
@@ -851,11 +849,13 @@ int SeleccionaStacker(void)
 			return MAGAZINE1;	// OK- STACKER1
 	}
 
+	#if 0
 	if(	detStackers[MAGAZINE2].TotalTarjetas>0)
 	{	// STATUS NO EMPTY
 		if( venta.GetStacker(MAGAZINE2) != STACKER_EMPTY)
 			return MAGAZINE2;	// OK- STACKER2
 	}
+	#endif
 
 	// ERROR, NO PROCEDE LA VENTA
 	return -1;
@@ -903,13 +903,12 @@ int ReadAllNewCard(int tkey)
 	memset(venta.MIA.ReadBlocks, 0x00, sizeof(venta.MIA.ReadBlocks));
 	memset(venta.MIA.KeyB, 0x00, sizeof(venta.MIA.KeyB));
 	
-	printf("ReadAllNewCard venta.MIA.MifareUID: ");
+
 	for(k=0; k<6; k++)
 	{
 		venta. MIA.KeyA[1][k] = venta.MIA.MifareUID[k];
-		printf("%2x ",venta.MIA.MifareUID[k]);
 	}
-	printf("\n");
+
 	if( venta.Read_Sector1A(	venta.MIA.MifareUID, 
 								venta.MIA.KeyA, 
 								venta.MIA.ReadBlocks )!= 0)
@@ -984,9 +983,6 @@ int proceso_venta(long tcarga, long tbonos, long tfianza)
 		tmGetCard = milisegundos();
 		while     (  venta.CardPresent() != 0  )
 		{	
-			printf("MIA MF UID: ");
-			for(int i_uid = 0; i_uid < 8 ; i_uid++){printf("%2x ",venta.MIA.MifareUID[i_uid]);}
-			printf("/n");
 			usleep(10000);
 
 			if (  (milisegundos() - tmGetCard) >= 5000  )

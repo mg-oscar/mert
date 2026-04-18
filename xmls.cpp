@@ -286,7 +286,7 @@ void xmlConfig(xmlNode * node, int indent_len)
 			}
 			else if( strcmp((const char *)node->name, "stacker")==0)
 			{
-				Config.Stacker = atoi((const char *)xmlNodeGetContent(node));
+				//Config.Stacker = atoi((const char *)xmlNodeGetContent(node)); //Un solo Stacker ignorar configuracion
 			}
 			else if( strcmp((const char *)node->name, "NoMov")==0)
 			{
@@ -1505,7 +1505,7 @@ int ReadConfigXML(void)
 	Config.Dispensador	= 1;
 	Config.Monedero		= 1;
 	Config.Billetero	= 1;
-	Config.Stacker		= 0;
+	Config.Stacker		= 1; /* Stacker 1 */
 	Config.NoMov		= 1;
 	Config.Captura		= 0;
 	Config.BinBoxMax	= 25;
