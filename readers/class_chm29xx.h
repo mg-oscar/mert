@@ -35,7 +35,7 @@ public:
 	
 	unsigned char SAMUID[8];		// UID SAM
 
-	int CardPresent(void);	// Read UID de la tarjeta
+	int CardPresent(BYTE UID[]);	// Read UID de la tarjeta
 
 
 	
@@ -113,7 +113,7 @@ private:
 	int ObtieneDatosAPDU(void);
 
 	// EX-RF MODULE
-	int RF_CardPresent(void);
+	int RF_CardPresent(unsigned char MFUID[]);
 
 	int searchErr(int err);
 	int ObtieneErrores(void);

@@ -903,10 +903,13 @@ int ReadAllNewCard(int tkey)
 	memset(venta.MIA.ReadBlocks, 0x00, sizeof(venta.MIA.ReadBlocks));
 	memset(venta.MIA.KeyB, 0x00, sizeof(venta.MIA.KeyB));
 	
-
+	printf("ReadAllNewCard venta.MIA.MifareUID: ");
 	for(k=0; k<6; k++)
+	{
 		venta. MIA.KeyA[1][k] = venta.MIA.MifareUID[k];
-
+		printf("%2x ",venta.MIA.MifareUID[k]);
+	}
+	printf("\n");
 	if( venta.Read_Sector1A(	venta.MIA.MifareUID, 
 								venta.MIA.KeyA, 
 								venta.MIA.ReadBlocks )!= 0)
@@ -981,6 +984,9 @@ int proceso_venta(long tcarga, long tbonos, long tfianza)
 		tmGetCard = milisegundos();
 		while     (  venta.CardPresent() != 0  )
 		{	
+			printf("MIA MF UID: ");
+			for(int i_uid = 0; i_uid < 8 ; i_uid++){printf("%2x ",venta.MIA.MifareUID[i_uid]);}
+			printf("/n");
 			usleep(10000);
 
 			if (  (milisegundos() - tmGetCard) >= 5000  )

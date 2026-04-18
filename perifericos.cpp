@@ -138,6 +138,7 @@ int	Venta_Init(unsigned char usb)
 		}
 		else if( MertPort.EXP_Marca==RDR_CHM2901RF)
 		{
+			switch(op){
 			case 0:
 
 					if(venta.initComm(MertPort.EXP_Marca, MertPort.EXP_TipoPuerto,
@@ -159,6 +160,7 @@ int	Venta_Init(unsigned char usb)
 					op = 0;
 						return 0x00;
 					}
+		}
 
 		}
 		else if( MertPort.EXP_Marca==DIS_KYT2664)

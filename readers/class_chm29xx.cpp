@@ -832,7 +832,7 @@ int CLASS_CHM29XX::ReadAllMIA(	unsigned char TypeKey,
 {
 	int i;
 
-	if( CardPresent( ) !=0 )
+	if( CardPresent( mfuid ) !=0 )
 	{
 		printf("Error en Read UID\n");
 		return 0x0400;		// ERROR EN UID
@@ -988,7 +988,7 @@ int CLASS_CHM29XX::Read_Sector1A(BYTE MFUID[], BYTE pPASS[16][6], BYTE readblock
 	}
 	
 	if( RF_Autentifica() != 0)
-	{
+	{ 
 		printf("Error Autentifica Sector 1A\n");
 		return 0x10002;
 	}
@@ -1131,20 +1131,21 @@ int CLASS_CHM29XX::ReadPosicionMIA(void)
 /******************************************************************************/
 /*                                                                            */
 /******************************************************************************/
-int CLASS_CHM29XX::CardPresent(void)
+int CLASS_CHM29XX::CardPresent(BYTE UID[])
 {	int k;
 
 	RF_EnableAntenna(RF_Antenna12);
 	usleep(100000);
 
-	if( RF_CardPresent( ) == 0)
+	if( RF_CardPresent( UID ) == 0)
 	{
-//		printf("Card Present ok\n");
+		printf("Card Present ok\n");
 		ECode = 0x000;
 		return 0x0;	// OK
 	}
-//	else
-//		printf("Card NO Present\n");
+	else
+		printf("Card NO Present\n");
+		
 	ECode = (rxBuf[8]*0x100) + rxBuf[9]; 
 
 	return 0x01;
@@ -1183,7 +1184,7 @@ int CLASS_CHM29XX::RF_EnableAntenna(unsigned char nAntenna)
 /******************************************************************************/
 /* RF Card Present                                                            */
 /******************************************************************************/
-int CLASS_CHM29XX::RF_CardPresent(void)
+int CLASS_CHM29XX::RF_CardPresent(unsigned char MFUID[])
 {	int re;
 
 	auxBuf[0] = RF_CmdTypeA_ReqStdToSelect;
@@ -1193,13 +1194,17 @@ int CLASS_CHM29XX::RF_CardPresent(void)
 		return 0x01;
 	}
 	if(re == KYT_POSITIVE)
-	{	if(rbuf==21)
+	{			
+		printf("RF_CardPresent: rbuf:%d Data:\n",rbuf);
+		for(int i = 0; i < rbuf ; i++){printf("%02x ", rxBuf[i]);}
+		printf("\n");
+		if(rbuf==21)
 		{
 			// Detecto una Tarjeta y se obtuvo su informacion
 			for(re=0; re<4; re++)
-				MifareUID[re] = rxBuf[14+re];
-			MifareUID[4] = MifareUID[0];
-			MifareUID[5] = MifareUID[1];
+				MFUID[re] = rxBuf[14+re];
+			MFUID[4] = MFUID[0];
+			MFUID[5] = MFUID[1];
 			re = 0x00;	// Presente ok
 		}
 		else
@@ -1210,7 +1215,7 @@ int CLASS_CHM29XX::RF_CardPresent(void)
 	}
 	else
 	{
-		printf("Negative=%02X%02X\n", rxBuf[0x08], rxBuf[0x09]);
+		printf("RF_CardPresent: Negative=%02X%02X\n", rxBuf[0x08], rxBuf[0x09]);
 	}
 	return re;
 }

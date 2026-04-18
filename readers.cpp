@@ -556,7 +556,7 @@ int readers::CardPresent()
 		// 		return reader_cim6903.CardPresent(MIA.MifareUID);
 		// 		break;
 		case RDR_CHM2901RF:
-				return reader_chm2901.CardPresent(/*MIA.MifareUID*/);//To do handling of reading Mifare UID
+				return reader_chm2901.CardPresent(MIA.MifareUID);
 				break;
 				
 		case DIS_KYT2664:

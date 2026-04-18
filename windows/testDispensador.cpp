@@ -56,7 +56,9 @@ void BtnTestMIA (GtkWidget *widget, gpointer *data)
 
 	char msg1[100];
 	if(err==0x00)
+	{
 		strcpy(msg1, "MIA OK");
+	}
 	else if(err==0x01)
 		strcpy(msg1, "MIA NO DETECTADA");
 	else if(err==0x02)
@@ -283,13 +285,13 @@ void AccionesDispensador(void)
 							gtk_button_set_label ( GTK_BUTTON(lblTDisp), muid );						
 					}
 					#endif
-					if( venta.reader_chm2901.CardPresent(/*MUID*/)!= 0)
+					if( venta.CardPresent()!= 0)
 					{
 						gtk_button_set_label ( GTK_BUTTON(lblTDisp), (char *)"" );
 					}
 					else
-					{	sprintf(muid,"%02X%02X%02X%02X", MUID[0],MUID[1],MUID[2],MUID[3]);
-							gtk_button_set_label ( GTK_BUTTON(lblTDisp), muid );						
+					{	sprintf(muid,"%02X%02X%02X%02X", venta.MIA.MifareUID[0],venta.MIA.MifareUID[1],venta.MIA.MifareUID[2],venta.MIA.MifareUID[3]);
+						tk_button_set_label ( GTK_BUTTON(lblTDisp), muid );	
 					}
 				}
 
@@ -347,8 +349,9 @@ void AccionesDispensador(void)
 						gtk_button_set_label ( GTK_BUTTON(lblTDisp), (char *)"" );
 					}
 					else
-					{	sprintf(muid,"%02X%02X%02X%02X", MUID[0],MUID[1],MUID[2],MUID[3]);
-							gtk_button_set_label ( GTK_BUTTON(lblTDisp), muid );						
+					{	
+						sprintf(muid,"%02X%02X%02X%02X", venta.MIA.MifareUID[0],venta.MIA.MifareUID[1],venta.MIA.MifareUID[2],venta.MIA.MifareUID[3]);
+						gtk_button_set_label ( GTK_BUTTON(lblTDisp), muid );
 					}
 				}
 				break;
