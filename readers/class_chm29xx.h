@@ -148,7 +148,7 @@ private:
 
 // TimeOut para c/u de los comandos, en milisegundos
 #define TO_GENERAL		100
-#define TO_RF_GENERAL	200
+#define TO_RF_GENERAL	400
 #define TO_RESET_SAM	800
 #define TO_CAPTURA		3000
 #define TM_GETCARD		2000

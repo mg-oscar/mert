@@ -1271,7 +1271,7 @@ int CLASS_CHM29XX::RF_Autentifica(void)
 
 	auxBuf[0] = RF_CmdAuthentication2;
 
-	if( (re=SendCmd(CMD_ExternalRfControl, auxBuf, 1, TO_GENERAL )) < 0 )
+	if( (re=SendCmd(CMD_ExternalRfControl, auxBuf, 1, TO_RF_GENERAL )) < 0 )
 	{
 		printf("Error Autentifica 2\n");
 		return re;
