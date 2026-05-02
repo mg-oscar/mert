@@ -75,9 +75,9 @@
 /* v462 250205 Correccion ene vento de billete $20.00 de los azules (viejo)   */
 /* v463 250206 Correccion en mensaje de "solo monedas" no se quita            */
 /* v464 250206 Se continua revisando los eventos del billetero                */
-/*                                                                            */
+/* v465	250418 Cambio a dispensadore de stacker sencillo CHM2901              */
 /******************************************************************************/
-const char VERSION[]={"v464"};
+const char VERSION[]={"v465"};
 //
 // System Includes
 #include <cstdlib>
