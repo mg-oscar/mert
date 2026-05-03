@@ -8,7 +8,7 @@
 #include "libMIA.hpp"
 #include "printer.h"
 #include "readers.h"
-#include "readers/class_cim6903.h"
+//#include "readers/class_cim6903.h"
 #include "windows/dispensador.h"
 #include "mert.h"
 #include "kytv26xx.h"
@@ -68,9 +68,7 @@ void RevisaPermisoVenta(void)
 				printf("HAY TARJETAS EN STACKERS\n");
 			// // HAY TARJETAS EN LOS DISPENSADORES
 			// Revisar la BD
-			if	(	(detStackers[MAGAZINE1].TotalTarjetas==0) && 
-					(detStackers[MAGAZINE2].TotalTarjetas==0) 
-				)
+			if	(detStackers[MAGAZINE1].TotalTarjetas==0)
 			{
 				printf("NO VENDE\n");
 				mert_operacion.fgVENTA = 0;	// No Vende Tarjetas
@@ -823,15 +821,16 @@ int SeleccionaStacker(void)
 	}
 
 	// MAGAZINE 1 -> ACTIVO
-	if(Config.Stacker == STACKER1)
-	{	// HAY TARJETAS EN BASE DE DATOS
+	//if(Config.Stacker == STACKER1)
+	//{	// HAY TARJETAS EN BASE DE DATOS
 		if(	detStackers[MAGAZINE1].TotalTarjetas>0)
 		{	// STATUS NO EMPTY
 			if( venta.GetStacker(0x00) != 0)
 				return MAGAZINE1;	// OK- STACKER1
 		}
-	}
+	//}
 
+	#if 0
 	// MAGAZINE 2 -> ACTIVO
 	if(Config.Stacker == STACKER2)
 	{	// HAY TARJETAS EN BASE DE DATOS
@@ -841,6 +840,7 @@ int SeleccionaStacker(void)
 				return MAGAZINE2;	// OK- STACKER2
 		}
 	}
+	#endif
 
 	// NO CUMPLEN LAS CONDICIONES LOS STACKERS
 	if(	detStackers[MAGAZINE1].TotalTarjetas>0)
@@ -849,11 +849,13 @@ int SeleccionaStacker(void)
 			return MAGAZINE1;	// OK- STACKER1
 	}
 
+	#if 0
 	if(	detStackers[MAGAZINE2].TotalTarjetas>0)
 	{	// STATUS NO EMPTY
 		if( venta.GetStacker(MAGAZINE2) != STACKER_EMPTY)
 			return MAGAZINE2;	// OK- STACKER2
 	}
+	#endif
 
 	// ERROR, NO PROCEDE LA VENTA
 	return -1;
@@ -903,7 +905,9 @@ int ReadAllNewCard(int tkey)
 	
 
 	for(k=0; k<6; k++)
+	{
 		venta. MIA.KeyA[1][k] = venta.MIA.MifareUID[k];
+	}
 
 	if( venta.Read_Sector1A(	venta.MIA.MifareUID, 
 								venta.MIA.KeyA, 

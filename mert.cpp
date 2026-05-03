@@ -75,9 +75,9 @@
 /* v462 250205 Correccion ene vento de billete $20.00 de los azules (viejo)   */
 /* v463 250206 Correccion en mensaje de "solo monedas" no se quita            */
 /* v464 250206 Se continua revisando los eventos del billetero                */
-/*                                                                            */
+/* v465	250418 Cambio a dispensadore de stacker sencillo CHM2901              */
 /******************************************************************************/
-const char VERSION[]={"v464"};
+const char VERSION[]={"v466"};
 //
 // System Includes
 #include <cstdlib>
@@ -177,8 +177,10 @@ unsigned int milisegundos(void);
 #include "readers/class_civintec.cpp"
 
 // Reader Kytronics CIM6903 y Dispensador
-#include "readers/class_cim6903.h"
-#include "readers/class_cim6903.cpp"
+//#include "readers/class_cim6903.h"
+//#include "readers/class_cim6903.cpp"
+
+
 
 // Reader ACR1222L -> Advanced Card System
 #include "readers/class_acr1222l.h"
@@ -186,6 +188,10 @@ unsigned int milisegundos(void);
 
 #include "kytv26xx.h"
 #include "kytv26xx.cpp"
+
+// Kytronics CHM2901
+#include "readers/class_chm29xx.h"
+#include "readers/class_chm29xx.cpp"
 
 int proceso_venta(long tcarga, long tbonos, long tfianza);
 

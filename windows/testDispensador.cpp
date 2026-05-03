@@ -56,7 +56,9 @@ void BtnTestMIA (GtkWidget *widget, gpointer *data)
 
 	char msg1[100];
 	if(err==0x00)
+	{
 		strcpy(msg1, "MIA OK");
+	}
 	else if(err==0x01)
 		strcpy(msg1, "MIA NO DETECTADA");
 	else if(err==0x02)
@@ -178,10 +180,10 @@ void winTestDispensador(void)
 	g_signal_connect ( btn, "clicked",  G_CALLBACK (ButtonEventDisp), (gpointer *)"1");	
 
 	// Botones de accion
-	btn = CreateButton (fxDisp, (char *)"  TOMA\n TARJETA\nSTACKER 2",50,240);
-	gtk_setfont(btn, "SANS", 700, 35);
-	gtk_setsize(btn, 260,50);
-	g_signal_connect ( btn, "clicked",  G_CALLBACK (ButtonEventDisp), (gpointer *)"2");	
+	//btn = CreateButton (fxDisp, (char *)"  TOMA\n TARJETA\nSTACKER 2",50,240);
+	//gtk_setfont(btn, "SANS", 700, 35);
+	//gtk_setsize(btn, 260,50);
+	//g_signal_connect ( btn, "clicked",  G_CALLBACK (ButtonEventDisp), (gpointer *)"2");	
 
 	// Botones de accion
 	btn = CreateButton (fxDisp, (char *)"CAPTURA\n\nTARJETA",380,80);
@@ -195,7 +197,7 @@ void winTestDispensador(void)
 	g_signal_connect ( btn, "clicked",  G_CALLBACK (ButtonEventDisp), (gpointer *)"4");	
 
 	// FRAME
-	for(i=0; i<2; i++)
+	for(i=0; i<1; i++)
 	{	sprintf(msg,"STATUS STACKER %d", i+1);
 		frm = gtk_frame_new(msg);
 		gtk_fixed_put (GTK_FIXED(fxDisp), frm, (50 + 330*i),  420);
@@ -264,12 +266,16 @@ void AccionesDispensador(void)
 			case 0:
 				if(op<3)
 				{
+					#if 0
 					re = venta.reader_cim6903.ReadStatusStacker();
+					#endif
+					re = venta.reader_chm2901.ReadStatusStacker();
 					upStatusStacker(re);
 					op++;
 				}
 				else
 				{	op = 0;
+					#if 0
 					if( venta.reader_cim6903.CardPresent(MUID)!= 0)
 					{
 						gtk_button_set_label ( GTK_BUTTON(lblTDisp), (char *)"" );
@@ -278,27 +284,42 @@ void AccionesDispensador(void)
 					{	sprintf(muid,"%02X%02X%02X%02X", MUID[0],MUID[1],MUID[2],MUID[3]);
 							gtk_button_set_label ( GTK_BUTTON(lblTDisp), muid );						
 					}
+					#endif
+					if( venta.CardPresent()!= 0)
+					{
+						gtk_button_set_label ( GTK_BUTTON(lblTDisp), (char *)"" );
+					}
+					else
+					{	sprintf(muid,"%02X%02X%02X%02X", venta.MIA.MifareUID[0],venta.MIA.MifareUID[1],venta.MIA.MifareUID[2],venta.MIA.MifareUID[3]);
+						gtk_button_set_label ( GTK_BUTTON(lblTDisp), muid );	
+					}
 				}
 
 				break;
 
 			case 1:	//	
-				venta.GetCard(STACKER1);				
+				venta.GetCard(/*STACKER1*/0);				
 				stModIO->AccionDispensador = 0;
 				break;
 
 			case 2:	//
-				venta.GetCard(STACKER2);
+				venta.GetCard(/*STACKER2*/0);
 				stModIO->AccionDispensador = 0;
 				break;
 
 			case 3:
+			#if 0
 				venta.reader_cim6903.Captura();
+			#endif
+				venta.reader_chm2901.CapturaCard();
 				stModIO->AccionDispensador = 0;
 				break;
 
 			case 4:
+			#if 0
 				venta.reader_cim6903.EjectDrop();
+			#endif
+				venta.reader_chm2901.EjectCard();
 				stModIO->AccionDispensador = 0;
 				break;
 
@@ -328,19 +349,20 @@ void AccionesDispensador(void)
 						gtk_button_set_label ( GTK_BUTTON(lblTDisp), (char *)"" );
 					}
 					else
-					{	sprintf(muid,"%02X%02X%02X%02X", MUID[0],MUID[1],MUID[2],MUID[3]);
-							gtk_button_set_label ( GTK_BUTTON(lblTDisp), muid );						
+					{	
+						sprintf(muid,"%02X%02X%02X%02X", venta.MIA.MifareUID[0],venta.MIA.MifareUID[1],venta.MIA.MifareUID[2],venta.MIA.MifareUID[3]);
+						gtk_button_set_label ( GTK_BUTTON(lblTDisp), muid );
 					}
 				}
 				break;
 
 			case 1:	//	
-				venta.GetCard(STACKER1);				
+				venta.GetCard(/*STACKER1*/0);				
 				stModIO->AccionDispensador = 0;
 				break;
 
 			case 2:	//
-				venta.GetCard(STACKER2);
+				venta.GetCard(/*STACKER2*/0);
 				stModIO->AccionDispensador = 0;
 				break;
 
