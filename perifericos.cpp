@@ -9,7 +9,8 @@
 #include "libMIA.hpp"
 #include "printer.h"
 #include "readers.h"
-#include "readers/class_cim6903.h"
+//#include "readers/class_cim6903.h"
+#include "readers/class_chm29xx.h"
 #include "readers/class_civintec.h"
 #include "readers/class_CV_CN670.h"
 #include "readers/class_acr1222l.h"
@@ -125,13 +126,44 @@ int	Venta_Init(unsigned char usb)
 				case 1:
 					// ID del Dispensador y Status del Stacker
 					if (venta.Identifica() == 0)
-					{	printf("Stacker1=%d   Stacker2=%d\n", 
-								venta.reader_cim6903.Stacker[0], venta.reader_cim6903.Stacker[0]);
+					{	
+						/*printf("Stacker1=%d   Stacker2=%d\n", 
+								venta.reader_cim6903.Stacker[0], venta.reader_cim6903.Stacker[0]);*/
+						printf("Stacker=%d   \n", 
+								venta.reader_chm2901.Stacker);
 					op = 0;
 						return 0x00;
 					}
 			}
-		} else if( MertPort.EXP_Marca==DIS_KYT2664)
+		}
+		else if( MertPort.EXP_Marca==RDR_CHM2901RF)
+		{
+			switch(op){
+			case 0:
+
+					if(venta.initComm(MertPort.EXP_Marca, MertPort.EXP_TipoPuerto,
+								MertPort.EXP_SerialName, MertPort.EXP_SerialBaud) != 0)
+					{
+						printf("Open Error Dispensador KYT-CHM2901\n");
+						return 0x0101;
+					}
+					op = 1;
+
+				case 1:
+					// ID del Dispensador y Status del Stacker
+					if (venta.Identifica() == 0)
+					{	
+						/*printf("Stacker1=%d   Stacker2=%d\n", 
+								venta.reader_cim6903.Stacker[0], venta.reader_cim6903.Stacker[0]);*/
+						printf("Stacker=%d   \n", 
+								venta.reader_chm2901.Stacker);
+					op = 0;
+						return 0x00;
+					}
+		}
+
+		}
+		else if( MertPort.EXP_Marca==DIS_KYT2664)
 		{
 			// KYT2664
 			printf("KYT2664\n");
@@ -870,6 +902,10 @@ int perifericosOK(void)
 	
 		
 		return 0x00;
+	}
+	else
+	{
+		printf("Error Perifericos OK\n");
 	}
 	return 0x01;
 }

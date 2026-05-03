@@ -305,8 +305,6 @@ void winFrameDisp(GtkWidget *fxD, int nstk, int xpos, int ypos)
 	//*********************** Frame Stcaker
 	if(nstk==MAGAZINE1)
 		frmStk = gtk_frame_new("MAGAZINE 1");
-	else
-		frmStk = gtk_frame_new("MAGAZINE 2");
 
 	gtk_fixed_put (GTK_FIXED(fxD), frmStk, xpos,  ypos);
 
@@ -325,8 +323,6 @@ void winFrameDisp(GtkWidget *fxD, int nstk, int xpos, int ypos)
 
 	if(nstk==MAGAZINE1)
 		v1 = detStackers[MAGAZINE1].TotalTarjetas;
-	else
-		v1 = detStackers[MAGAZINE2].TotalTarjetas;
 
 	v = ((double)v1 * 100)/MertLmt.capacity_dispenser;
 
@@ -403,8 +399,8 @@ void winDispensador_f(void)
 	gtk_setsize(fxDisp, 1100, 800);
 	gtk_container_add(GTK_CONTAINER (frmDispensador), fxDisp);
 
-	winFrameDisp(fxDisp, MAGAZINE1,  20, 20);
-	winFrameDisp(fxDisp, MAGAZINE2, 410, 20);
+	winFrameDisp(fxDisp, MAGAZINE1,  215, 20);
+	//(fxDisp, MAGAZINE2, 410, 20);
 	
 	winKB_Disp( fxDisp, 770, 30);
 	gtk_entry_grab_focus_without_selecting ( GTK_ENTRY(entDisp[0]) );
@@ -412,34 +408,34 @@ void winDispensador_f(void)
 
 
 	// **************  Stacker Activo *******************************************
-	frmAct = gtk_frame_new("MAGAZINE ACTIVO");
+	//frmAct = gtk_frame_new("MAGAZINE ACTIVO");
 
-	gtk_fixed_put (GTK_FIXED(fxDisp), frmAct, 20,  620);
-	gtk_setcolorbg(frmAct,  (char *)"gainsboro");
-	gtk_setfont(frmAct, "SANS", 700, 15);
+	//gtk_fixed_put (GTK_FIXED(fxDisp), frmAct, 20,  620);
+	//gtk_setcolorbg(frmAct,  (char *)"gainsboro");
+	//gtk_setfont(frmAct, "SANS", 700, 15);
 
-	fxAct = gtk_fixed_new();
-	gtk_setsize(fxAct, 350, 60);
-	gtk_container_add(GTK_CONTAINER (frmAct), fxAct);
+	//fxAct = gtk_fixed_new();
+	//gtk_setsize(fxAct, 350, 60);
+	//gtk_container_add(GTK_CONTAINER (frmAct), fxAct);
 
-	cmbDisp = gtk_combo_box_text_new();
-	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(cmbDisp), NULL, "Ninguno  ");
-	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(cmbDisp), NULL, "Magazine 1");
-	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(cmbDisp), NULL, "Magazine 2");
-	gtk_combo_box_set_active(GTK_COMBO_BOX(cmbDisp), Config.Stacker);
-	gtk_container_add(GTK_CONTAINER (fxAct), cmbDisp);
-	gtk_fixed_move ( GTK_FIXED (fxAct), cmbDisp, 10, 10);
+	//cmbDisp = gtk_combo_box_text_new();
+	//gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(cmbDisp), NULL, "Ninguno  ");
+	//gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(cmbDisp), NULL, "Magazine 1");
+	//gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(cmbDisp), NULL, "Magazine 2");
+	//gtk_combo_box_set_active(GTK_COMBO_BOX(cmbDisp), Config.Stacker);
+	//gtk_container_add(GTK_CONTAINER (fxAct), cmbDisp);
+	//gtk_fixed_move ( GTK_FIXED (fxAct), cmbDisp, 10, 10);
 
 	// Grabar Stacker Activo
-	btn = CreateButton (fxAct, (char *)"Seleccionar", 180, 10);
-	gtk_setfont(btn, "SANS", 700, 20);
-	g_signal_connect ( btn, "clicked",  G_CALLBACK (BtnSaveStk), (gpointer *)"1");	
+	//btn = CreateButton (fxAct, (char *)"Seleccionar", 180, 10);
+	//gtk_setfont(btn, "SANS", 700, 20);
+	//g_signal_connect ( btn, "clicked",  G_CALLBACK (BtnSaveStk), (gpointer *)"1");	
 	//**************************************************************************
 
 	// **************  Vaciar Bandeja de Captura *******************************
 	frmBin = gtk_frame_new("Bandeja de Captura");
 
-	gtk_fixed_put (GTK_FIXED(fxDisp), frmBin, 420,  620);
+	gtk_fixed_put (GTK_FIXED(fxDisp), frmBin, 225,  620);
 	gtk_setcolorbg(frmBin,  (char *)"gainsboro");
 	gtk_setfont(frmBin, "SANS", 700, 15);
 
@@ -488,42 +484,42 @@ void winDispensador_d(void)
 	gtk_setsize(fxDisp, 1100, 800);
 	gtk_container_add(GTK_CONTAINER (frmDispensador), fxDisp);
 
-	winFrameDisp(fxDisp, MAGAZINE1,  20, 20);
-	winFrameDisp(fxDisp, MAGAZINE2, 370, 20);
+	winFrameDisp(fxDisp, MAGAZINE1,  195, 20);
+	//winFrameDisp(fxDisp, MAGAZINE2, 370, 20);
 	winKB_Disp( fxDisp, 720, 30);
 
 	gtk_entry_grab_focus_without_selecting ( GTK_ENTRY(entDisp[0]) );
 	dispEntry=0;
 
 	// **************  Stacker Activo *******************************************
-	frmAct = gtk_frame_new("MAGAZINE ACTIVO");
+	//frmAct = gtk_frame_new("MAGAZINE ACTIVO");
 
-	gtk_fixed_put (GTK_FIXED(fxDisp), frmAct, 20,  620);
-	gtk_setcolorbg(frmAct,  (char *)"gainsboro");
-	gtk_setfont(frmAct, "SANS", 700, 15);
+	//gtk_fixed_put (GTK_FIXED(fxDisp), frmAct, 20,  620);
+	//gtk_setcolorbg(frmAct,  (char *)"gainsboro");
+	//gtk_setfont(frmAct, "SANS", 700, 15);
 
-	fxAct = gtk_fixed_new();
-	gtk_setsize(fxAct, 350, 60);
-	gtk_container_add(GTK_CONTAINER (frmAct), fxAct);
+	//fxAct = gtk_fixed_new();
+	//gtk_setsize(fxAct, 350, 60);
+	//gtk_container_add(GTK_CONTAINER (frmAct), fxAct);
 
-	cmbDisp = gtk_combo_box_text_new();
-	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(cmbDisp), NULL, "Ninguno  ");
-	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(cmbDisp), NULL, "Magazine 1");
-	gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(cmbDisp), NULL, "Magazine 2");
-	gtk_combo_box_set_active(GTK_COMBO_BOX(cmbDisp), Config.Stacker);
-	gtk_container_add(GTK_CONTAINER (fxAct), cmbDisp);
-	gtk_fixed_move ( GTK_FIXED (fxAct), cmbDisp, 10, 10);
+	//cmbDisp = gtk_combo_box_text_new();
+	//gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(cmbDisp), NULL, "Ninguno  ");
+	//gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(cmbDisp), NULL, "Magazine 1");
+	//gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(cmbDisp), NULL, "Magazine 2");
+	//gtk_combo_box_set_active(GTK_COMBO_BOX(cmbDisp), Config.Stacker);
+	//gtk_container_add(GTK_CONTAINER (fxAct), cmbDisp);
+	//gtk_fixed_move ( GTK_FIXED (fxAct), cmbDisp, 10, 10);
 
 	// Grabar Stacker Activo
-	btn = CreateButton (fxAct, (char *)"Seleccionar", 180, 10);
-	gtk_setfont(btn, "SANS", 700, 20);
-	g_signal_connect ( btn, "clicked",  G_CALLBACK (BtnSaveStk), (gpointer *)"1");	
+	//btn = CreateButton (fxAct, (char *)"Seleccionar", 180, 10);
+	//gtk_setfont(btn, "SANS", 700, 20);
+	//g_signal_connect ( btn, "clicked",  G_CALLBACK (BtnSaveStk), (gpointer *)"1");	
 	//**************************************************************************
 
 	// **************  Vaciar Bandeja de Captura *******************************
 	frmBin = gtk_frame_new("Bandeja de Captura");
 
-	gtk_fixed_put (GTK_FIXED(fxDisp), frmBin, 420,  620);
+	gtk_fixed_put (GTK_FIXED(fxDisp), frmBin, 205,  620);
 	gtk_setcolorbg(frmBin,  (char *)"gainsboro");
 	gtk_setfont(frmBin, "SANS", 700, 15);
 
