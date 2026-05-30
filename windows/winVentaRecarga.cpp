@@ -1155,10 +1155,18 @@ void gtk_winprocess(void)
 		gtk_fixed_move ( GTK_FIXED (fxProcess), fxBtnII, x_Izquierdo, y_Inferior + 40 );
 
 	GtkWidget	*btnI;
+
+	btnII = gtk_button_new();
+    gtk_container_add(GTK_CONTAINER (fxBtnII), btnII );
+    gtk_fixed_move ( GTK_FIXED (fxBtnII), btnII, 0, 0 );
+    gtk_setsize(btnII, 300, 100);
+    gtk_removebuttonpadding(btnII);
+	g_signal_connect(btnII, "clicked", G_CALLBACK(btnII_on_button_clicked), NULL);
+
+	
 	snprintf(fname,100,"%samarilloclaro_izq500x180.png",path);
 	btnI = gtk_image_new_from_file(fname);
-	gtk_container_add(GTK_CONTAINER (fxBtnII), btnI);
-	gtk_fixed_move ( GTK_FIXED (fxBtnII), btnI ,0, 0);
+	gtk_container_add(GTK_CONTAINER (btnII), btnI);
 
 	lblBtnII = gtk_label_new( sel_mensaje(MSG_IDIOMA) );
 	gtk_container_add(GTK_CONTAINER (fxBtnII), lblBtnII);
@@ -1177,11 +1185,18 @@ void gtk_winprocess(void)
 	else
 		gtk_fixed_move ( GTK_FIXED (fxProcess), fxBtnID, x_Derecho, y_Inferior + 40);
 		
-//	GtkWidget	*btnID;
+	btnID = gtk_button_new();
+    gtk_container_add(GTK_CONTAINER (fxBtnID), btnID );
+    gtk_fixed_move ( GTK_FIXED (fxBtnID), btnID, 0, 0 );
+    gtk_setsize(btnID, 300, 100);
+    gtk_removebuttonpadding(btnID);
+	g_signal_connect(btnID, "clicked", G_CALLBACK(btnID_on_button_clicked), NULL);
+	
+
 	snprintf(fname,100,"%samarilloclaro_der500x180.png",path);
 	btnI = gtk_image_new_from_file(fname);
-	gtk_container_add(GTK_CONTAINER (fxBtnID), btnI);
-	gtk_fixed_move ( GTK_FIXED (fxBtnID), btnI ,0, 0);
+	gtk_container_add(GTK_CONTAINER (btnID), btnI);
+	
 
 	lblBtnID = gtk_label_new( sel_mensaje(MSG_IDIOMA) );
 	gtk_container_add(GTK_CONTAINER (fxBtnID), lblBtnID);
@@ -1202,11 +1217,18 @@ void gtk_winprocess(void)
 	else
 		gtk_fixed_move ( GTK_FIXED (fxProcess), fxBtnSD, 724, 260 );
 		
+	btnIniSD = gtk_button_new();
+    gtk_container_add(GTK_CONTAINER (fxBtnSD), btnIniSD );
+    gtk_fixed_move ( GTK_FIXED (fxBtnSD), btnIniSD, 0, 0 );
+    gtk_setsize(btnIniSD, 300, 100);
+    gtk_removebuttonpadding(btnIniSD);
+    g_signal_connect(btnIniSD, "clicked", G_CALLBACK(btnIniSD_on_button_clicked), NULL);
+
 	GtkWidget	*btnD;
-	snprintf(fname,100,"%samarilloclaro_der300x100.png",path);
-	btnD = gtk_image_new_from_file(fname);
-	gtk_container_add(GTK_CONTAINER (fxBtnSD), btnD);
-	gtk_fixed_move ( GTK_FIXED (fxBtnSD), btnD ,0, 0);
+	//snprintf(fname,100,"%samarilloclaro_der300x100.png",path);
+	//btnD = gtk_image_new_from_file(fname);
+	//gtk_container_add(GTK_CONTAINER (btnIniSD), btnD);
+
 
 	lblBtnSD = gtk_label_new( sel_mensaje(MSG_VENTA) );
 	gtk_container_add(GTK_CONTAINER (fxBtnSD), lblBtnSD);
@@ -1226,10 +1248,16 @@ void gtk_winprocess(void)
 	else
 		gtk_fixed_move ( GTK_FIXED (fxProcess), fxBtnSI, x_Izquierdo, y_Superior + 195);
 
+	btnSI = gtk_button_new();
+    gtk_container_add(GTK_CONTAINER (fxBtnSI), btnSI );
+    gtk_fixed_move ( GTK_FIXED (fxBtnSI), btnSI, 0, 0 );
+    gtk_setsize(btnSI, 180, 60);
+    gtk_removebuttonpadding(btnSI);
+	g_signal_connect(btnSI, "clicked", G_CALLBACK(btnSI_on_button_clicked), NULL);
+	
 	snprintf(fname,100,"%samarilloclaro_izq180x60.png",path);
 	btnD = gtk_image_new_from_file(fname);
-	gtk_container_add(GTK_CONTAINER (fxBtnSI), btnD);
-	gtk_fixed_move ( GTK_FIXED (fxBtnSI), btnD ,0, 0);
+	gtk_container_add(GTK_CONTAINER (btnSI), btnD);
 
 	lblBtnSI = gtk_label_new( sel_mensaje(MSG_DESATORA) );
 	gtk_container_add(GTK_CONTAINER (fxBtnSI), lblBtnSI);
@@ -1250,10 +1278,16 @@ void gtk_winprocess(void)
 	else
 		gtk_fixed_move ( GTK_FIXED (fxProcess), fxIniBtnSI, x_Izquierdo, y_Superior + 195);
 
+	btnIniSI = gtk_button_new();
+    gtk_container_add(GTK_CONTAINER (fxIniBtnSI), btnIniSI );
+    gtk_fixed_move ( GTK_FIXED (fxIniBtnSI), btnIniSI, 0, 0 );
+    gtk_setsize(btnIniSI, 180, 60);
+    gtk_removebuttonpadding(btnIniSI);
+	g_signal_connect(btnIniSI, "clicked", G_CALLBACK(btnIniSI_on_button_clicked), NULL);
+		
 	snprintf(fname,100,"%samarilloclaro_izq180x60.png",path);
 	btnD = gtk_image_new_from_file(fname);
-	gtk_container_add(GTK_CONTAINER (fxIniBtnSI), btnD);
-	gtk_fixed_move ( GTK_FIXED (fxIniBtnSI), btnD ,0, 0);
+	gtk_container_add(GTK_CONTAINER (btnIniSI), btnD);
 
 	lblIniBtnSI = gtk_label_new( sel_mensaje(MSG_IDIOMA) );
 	gtk_container_add(GTK_CONTAINER (fxIniBtnSI), lblIniBtnSI);

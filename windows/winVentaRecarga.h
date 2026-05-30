@@ -36,7 +36,7 @@ GtkWidget	*fxBtnSI, *lblBtnSI;	// Boton Superior Izquierdo;
 GtkWidget	*fxIniBtnSI, *lblIniBtnSI;	// Inicio Boton Superior Izquierdo
 GtkWidget	*fxIniBtnIC, *lblIniBtnIC;	// Inicio Boton Inferior Central
 
-
+GtkWidget *btnIniSI, *btnIniSD, *btnSI, *btnII, *btnID;
 
 // Posicion de los mensajes de los botones
 const int x_Izquierdo = 0;

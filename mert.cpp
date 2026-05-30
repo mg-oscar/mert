@@ -228,6 +228,7 @@ readers puerta;			// Puerta
 //CLASS_KYT26xx dispensador;
 
 // windows
+#include "guiInputs.cpp"
 #include "windows/winmain.h"
 #include "windows/winmain.cpp"
 
@@ -324,7 +325,7 @@ int main(int argc, char** argv)
 
 		while (gtk_events_pending ())
 			gtk_main_iteration_do (TRUE);
-	}
+		}
 	return 0;
 }
 
