@@ -152,6 +152,26 @@ void gtk_show(GtkWidget* widget)
 /******************************************************************************/
 /*                                                                            */
 /******************************************************************************/
+void gtk_removebuttonpadding(GtkWidget *widget)
+{	gchar			*css;
+	gchar			buff[100];
+	GtkCssProvider	*provider;
+
+	snprintf(buff, 100, "* { padding: 0; margin: 0; min-width: 0; min-height: 0;}");
+	css = g_strdup_printf ("%s",buff);
+ 
+	provider = gtk_css_provider_new(); 
+	gtk_css_provider_load_from_data(provider, css,-1,NULL); 
+	g_free (css);
+
+	GtkStyleContext * context = gtk_widget_get_style_context(widget);   
+	gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider),GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+	g_object_unref (provider);
+}
+/******************************************************************************/
+/*                                                                            */
+/******************************************************************************/
 void winMsg( GtkWidget *lbl, GdkRGBA colorbg, GdkRGBA colorfg, char msg[], 
 												const char font[], int w, int size)
 {
@@ -969,7 +989,7 @@ void wininicial(int argc, char** argv)
 	gtk_hide(fxSaldo);
 
 	// desaperece el cursor en la venta de proceso
-	gtkSetCursor(GDK_WATCH);
+	//gtkSetCursor(GDK_WATCH);
 
 	updWin();
 }
